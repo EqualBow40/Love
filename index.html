@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>I Love You 💖</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Comic Sans MS", "Trebuchet MS", cursive, sans-serif;
+      min-height: 100vh;
+      overflow: hidden;
+      background: linear-gradient(135deg, #ffd6e8, #ffc2d1, #ffe5ec);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"><text y="24" font-size="24">💖</text></svg>') 16 16, auto;
+    }
+
+    .container {
+      position: relative;
+      z-index: 2;
+      background: rgba(255, 255, 255, 0.75);
+      border: 5px dashed #ff5c8a;
+      border-radius: 28px;
+      padding: 32px 24px;
+      width: min(90vw, 680px);
+      box-shadow: 0 0 30px rgba(255, 92, 138, 0.35);
+      animation: wiggle 1.8s infinite;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2.3rem, 7vw, 4.8rem);
+      color: #ff2e63;
+      text-shadow: 3px 3px 0 #fff, 6px 6px 0 #ffb3c6;
+      animation: pulse 0.9s infinite alternate;
+    }
+
+    p {
+      margin-top: 16px;
+      font-size: clamp(1rem, 3vw, 1.45rem);
+      color: #b30059;
+      line-height: 1.5;
+    }
+
+    .btn {
+      margin-top: 18px;
+      border: none;
+      border-radius: 999px;
+      padding: 14px 24px;
+      font-size: 1rem;
+      font-weight: bold;
+      background: #ff4d88;
+      color: white;
+      box-shadow: 0 6px 0 #d6336c;
+      cursor: pointer;
+      transition: transform 0.15s ease;
+    }
+
+    .btn:hover {
+      transform: scale(1.08) rotate(-2deg);
+    }
+
+    .btn:active {
+      transform: translateY(4px);
+      box-shadow: 0 2px 0 #d6336c;
+    }
+
+    .floating, .mini-love {
+      position: absolute;
+      user-select: none;
+      pointer-events: none;
+    }
+
+    .marquee {
+      position: fixed;
+      left: 0;
+      right: 0;
+      top: 0;
+      padding: 10px 0;
+      font-size: 1rem;
+      color: white;
+      background: #ff4d88;
+      white-space: nowrap;
+      overflow: hidden;
+      z-index: 5;
+      box-shadow: 0 3px 12px rgba(0,0,0,0.12);
+    }
+
+    .marquee span {
+      display: inline-block;
+      padding-left: 100%;
+      animation: scrollLove 12s linear infinite;
+      font-weight: bold;
+    }
+
+    .popup-love {
+      position: fixed;
+      background: #fff0f6;
+      border: 3px solid #ff4d88;
+      border-radius: 18px;
+      padding: 12px 16px;
+      font-size: 1rem;
+      color: #d6336c;
+      font-weight: bold;
+      box-shadow: 0 8px 20px rgba(255, 77, 136, 0.25);
+      animation: popIn 0.3s ease, fadeOut 2.5s ease forwards;
+      z-index: 10;
+    }
+
+    @keyframes pulse {
+      from { transform: scale(1); }
+      to { transform: scale(1.08) rotate(-1deg); }
+    }
+
+    @keyframes wiggle {
+      0%, 100% { transform: rotate(0deg); }
+      25% { transform: rotate(1.3deg); }
+      75% { transform: rotate(-1.3deg); }
+    }
+
+    @keyframes floatUp {
+      from {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+      }
+      to {
+        transform: translateY(-120vh) scale(1.4);
+        opacity: 0;
+      }
+    }
+
+    @keyframes scrollLove {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-100%); }
+    }
+
+    @keyframes popIn {
+      from { transform: scale(0.7); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    @keyframes fadeOut {
+      0%, 70% { opacity: 1; }
+      100% { opacity: 0; transform: translateY(-15px); }
+    }
+  </style>
+</head>
+<body>
+  <div class="marquee">
+    <span>💘 I LOVE YOU, LOVE 💘 I LOVE YOU, LOVE💘 I LOVE YOU, LOVE💘 YOU CANNOT ESCAPE THE LOVE 💘 I LOVE YOU, LOVE💘</span>
+  </div>
+
+  <div class="container">
+    <h1 id="loveText">I LOVE YOU 💖</h1>
+    <p>
+      You are cute. You are lovely. You are officially under attack by excessive Love energy.
+    </p>
+    <button class="btn" id="loveButton">Click for more love 😈💞</button>
+  </div>
+
+  <script>
+    const messages = [
+      'I LOVE YOU Kristen 💖',
+      'LOVE YOU Kristen 💘',
+      'SMOOCH ALERT 💋',
+      'TOO MUCH LOVE!!! Kisss meee 💞',
+      'SMOOCH MODE ACTIVATED 🌹',
+      'YOU ARE STUCK WITH MY LOVE LOVE LOVE😚',
+      'HEART ATTACK INCOMING 💓'
+    ];
+
+    const popupMessages = [
+      'mwah mwah mwah 💋',
+      'love detected 💘',
+      'you are very kissable 😚',
+      'be my forever!!! 🌹',
+      'annoying sometimes but adorable 💞',
+      'sending 999 hearts 💖',
+      'you cannot mute me 😈'
+    ];
+
+    const loveText = document.getElementById('loveText');
+    const loveButton = document.getElementById('loveButton');
+    let index = 0;
+
+    function createFloatingThing() {
+      const el = document.createElement('div');
+      el.className = 'floating';
+      el.textContent = Math.random() > 0.25 ? '💖' : 'I LOVE YOU';
+      el.style.left = Math.random() * window.innerWidth + 'px';
+      el.style.bottom = '-40px';
+      el.style.fontSize = (Math.random() * 24 + 18) + 'px';
+      el.style.animation = `floatUp ${Math.random() * 3 + 4}s linear forwards`;
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 7500);
+    }
+
+    function createPopup() {
+      const popup = document.createElement('div');
+      popup.className = 'popup-love';
+      popup.textContent = popupMessages[Math.floor(Math.random() * popupMessages.length)];
+      popup.style.left = Math.random() * (window.innerWidth - 180) + 'px';
+      popup.style.top = Math.random() * (window.innerHeight - 120) + 'px';
+      document.body.appendChild(popup);
+      setTimeout(() => popup.remove(), 2500);
+    }
+
+    function spamLoveBurst(count = 16) {
+      for (let i = 0; i < count; i++) {
+        setTimeout(() => createFloatingThing(), i * 80);
+      }
+      for (let i = 0; i < 4; i++) {
+        setTimeout(() => createPopup(), i * 220);
+      }
+    }
+
+    loveButton.addEventListener('click', () => {
+      index = (index + 1) % messages.length;
+      loveText.textContent = messages[index];
+      spamLoveBurst(28);
+    });
+
+    setInterval(() => {
+      createFloatingThing();
+    }, 350);
+
+    setInterval(() => {
+      if (Math.random() > 0.45) createPopup();
+    }, 1800);
+
+    document.addEventListener('click', (e) => {
+      const mini = document.createElement('div');
+      mini.className = 'mini-love';
+      mini.textContent = '💘';
+      mini.style.left = (e.clientX - 8) + 'px';
+      mini.style.top = (e.clientY - 8) + 'px';
+      mini.style.fontSize = '28px';
+      mini.style.animation = 'floatUp 2s ease-out forwards';
+      document.body.appendChild(mini);
+      setTimeout(() => mini.remove(), 2000);
+    });
+
+    spamLoveBurst(20);
+  </script>
+</body>
+</html>
